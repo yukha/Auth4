@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  
+  nginx:
+    image: nginx:stable-alpine
+    hostname: nginx
+    container_name: nginx
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/wwwroot:/var/www/wwwroot
+      - ./nginx/tls:/etc/tls
+    network_mode: "host"
+
+  api:
+    hostname: api
+    container_name: api
+    build:
+      context: ../Auth4.WebApi/
+      dockerfile: Auth4-WebApi.Dockerfile
+    ports:
+      - "5001:80"
+
+    
+      
+    
+  
+
