@@ -1,0 +1,8 @@
+<h3>Http status 401 starts login process</h3>
+<p>1. Save current url into SessionStore (api.service.ts line 25)</p>
+<p>2. Redirect to /auth/Login</p>
+<h3>After login it returns to /sign-in url</h3>
+<p>1. Remove info from from SessionStore</p>
+<p>2. Route to url from SessionStore</p>
+<h3>For logout redirect to /auth/Logout</h3>
+<p>After remove cookies it returns to '/' url</p>

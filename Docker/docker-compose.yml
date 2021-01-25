@@ -8,7 +8,7 @@ services:
     container_name: nginx
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/wwwroot:/var/www/wwwroot
+      - ../Auth4Web/dist/Auth4Web:/var/www/wwwroot
       - ./nginx/tls:/etc/tls
     network_mode: "host"
 
@@ -18,11 +18,24 @@ services:
     build:
       context: ../Auth4.WebApi/
       dockerfile: Auth4-WebApi.Dockerfile
+    network_mode: "host"
+
+  auth:
+    hostname: auth
+    container_name: auth
+    build:
+      context: ../Auth4.AuthDev/
+      dockerfile: Auth4-AuthDev.Dockerfile
+    network_mode: "host"
+
+  redis:
+    image: "redis:alpine"
+    command: redis-server --requirepass Password1
     ports:
-      - "5001:80"
-
-    
-      
-    
-  
-
+      - "6379:6379"
+    volumes:
+      - ./redis/data:/var/lib/redis
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_REPLICATION_MODE=master
+ 
