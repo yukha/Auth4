@@ -25,10 +25,10 @@ namespace Auth4.WebApi.Controllers
         {
             return new UserData
             {
-                TenantId = "00000000-0000-0000-0000-000000000001",
-                UserId = "00000000-0000-0000-0000-000000000002",
-                Name = "User Name",
-                Roles = new[] {"User", "Developer"}
+                TenantId = User.Claims.FirstOrDefault(c => c.Type == "tid")?.Value,
+                UserId = User.Claims.FirstOrDefault(c => c.Type == "sub")?.Value,
+                Name = User.Claims.FirstOrDefault(c => c.Type == "username")?.Value,
+                Roles = User.Claims.FirstOrDefault(c => c.Type == "roles")?.Value.Split(' '),
             };
         }
     }

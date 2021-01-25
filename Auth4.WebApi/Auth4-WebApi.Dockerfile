@@ -12,6 +12,6 @@ WORKDIR /app
 COPY --from=build /app/Auth4.WebApi/out ./
 ENV ASPNETCORE_URLS=http://+:5001
 EXPOSE 5001
-ENTRYPOINT ["dotnet", "Auth4.WebApi.dll", "--server.urls", "http://localhost:5001", "--environment=Development"]
+ENTRYPOINT ["dotnet", "Auth4.WebApi.dll", "--server.urls", "http://localhost:5001", "--environment=Production"]
 
 

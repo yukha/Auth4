@@ -12,6 +12,6 @@ WORKDIR /app
 COPY --from=build /app/Auth4.AuthDev/out ./
 ENV ASPNETCORE_URLS=http://+:5000
 EXPOSE 5000
-ENTRYPOINT ["dotnet", "Auth4.AuthDev.dll", "--server.urls", "http://localhost:5000", "--environment=Development"]
+ENTRYPOINT ["dotnet", "Auth4.AuthDev.dll", "--server.urls", "http://localhost:5000", "--environment=Production"]
 
 

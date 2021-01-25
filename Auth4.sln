@@ -1,16 +1,22 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth4.WebApi", "Auth4.WebApi\Auth4.WebApi.csproj", "{AFC4BAE3-B2F8-4597-8557-110594A96308}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker\", "{EAC19FCB-4D63-45C9-BB0A-9A9AB6541531}"
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker.prod", "Docker.prod\", "{EAC19FCB-4D63-45C9-BB0A-9A9AB6541532}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker.local", "Docker.local\", "{EAC19FCB-4D63-45C9-BB0A-9A9AB6541531}"
 ProjectSection(SolutionItems) = preProject
-	Docker\docker-compose.yml = Docker\docker-compose.yml
-	Docker\readme.md = Docker\readme.md
-	Docker\nginx\conf.d\app.conf = Docker\nginx\conf.d\app.conf
+	Docker.local\docker-compose.yml = Docker.local\docker-compose.yml
+	Docker.local\readme.md = Docker.local\readme.md
+	Docker.local\nginx\conf.d\app.conf = Docker.local\nginx\conf.d\app.conf
 EndProjectSection
 EndProject
+
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth4.AuthDev", "Auth4.AuthDev\Auth4.AuthDev.csproj", "{3A45760D-F0FB-40BE-B385-95D5E982374D}"
 EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
