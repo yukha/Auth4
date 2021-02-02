@@ -1,5 +1,5 @@
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine AS build
 WORKDIR /app
 COPY  ./ ./Auth4.AuthDev/
 RUN dotnet restore Auth4.AuthDev/Auth4.AuthDev.csproj

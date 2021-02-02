@@ -5,15 +5,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using Microsoft.AspNetCore.DataProtection.StackExchangeRedis;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
-using SameSiteMode = Microsoft.AspNetCore.Http.SameSiteMode;
 
 namespace Auth4.WebApi
 {
@@ -29,9 +28,9 @@ namespace Auth4.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCustomDataProtection();
-            
-            
+            services.AddCustomDataProtection(Configuration.GetSection("Redis"));
+
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
@@ -94,12 +93,12 @@ namespace Auth4.WebApi
 
     public static class DataProtectionExtension
     {
-        public static IServiceCollection AddCustomDataProtection(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddCustomDataProtection(this IServiceCollection serviceCollection, 
+            IConfiguration redisSection)
         {
             var builder = serviceCollection
                 .AddDataProtection()
-                .SetApplicationName("MyApp")
-                .DisableAutomaticKeyGeneration()
+                .SetApplicationName(redisSection["ApplicationName"])
                 .AddKeyManagementOptions(options =>
                 {
                     options.NewKeyLifetime = new TimeSpan(365, 0, 0, 0);
@@ -108,12 +107,12 @@ namespace Auth4.WebApi
 
             serviceCollection
                 .AddOptions<KeyManagementOptions>()
-                .Configure((options) =>
+                .Configure(options =>
                 {
                     options.XmlRepository =
-                        new Microsoft.AspNetCore.DataProtection.StackExchangeRedis.RedisXmlRepository(
-                            () => ConnectionMultiplexer.Connect("127.0.0.1:6379,password=Password1").GetDatabase(),
-                            "DataProtection-Keys");
+                        new RedisXmlRepository(
+                            () => ConnectionMultiplexer.Connect(redisSection["Configuration"]).GetDatabase(),
+                            redisSection["DataProtectionKeyName"]);
                 });
             return serviceCollection;
         }

@@ -1,5 +1,3 @@
-using System;
-
 namespace Auth4.WebApi
 {
     public class UserData

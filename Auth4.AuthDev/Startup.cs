@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
@@ -9,7 +7,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,8 +15,11 @@ namespace Auth4.AuthDev
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment _env;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
+            _env = env;
             Configuration = configuration;
         }
 
@@ -27,13 +27,13 @@ namespace Auth4.AuthDev
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCustomDataProtection();
-            
+            services.AddCustomDataProtection(Configuration.GetSection("Redis"));
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
                     options.Cookie.HttpOnly = true;
-                    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                    options.Cookie.SecurePolicy = CookieSecurePolicy.None;
                     options.Cookie.SameSite = SameSiteMode.Lax;
                     options.Cookie.Name = "ardp.Auth";
                     options.Events.OnRedirectToLogin = context =>
@@ -55,12 +55,14 @@ namespace Auth4.AuthDev
             {
                 if (ctx.Request.Path == "/auth/Login")
                 {
+                    var userSection = Configuration.GetSection("User");
+                        
                     var claims = new List<Claim>
                     {
-                        new Claim("tid", "00000000-0000-0000-0000-000000000001"),
-                        new Claim("sub", "00000000-0000-0000-0000-000000000002"),
-                        new Claim("username", "Local Developer"),
-                        new Claim("roles", "Login User Developer"),
+                        new("tid", userSection["tid"]),
+                        new("sub", userSection["sub"]),
+                        new("username", userSection["username"]),
+                        new("roles", userSection["roles"])
                     };
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -92,6 +94,5 @@ namespace Auth4.AuthDev
                 ctx.Response.StatusCode = 404;
             });
         }
-        
     }
 }

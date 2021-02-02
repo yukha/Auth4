@@ -16,6 +16,8 @@ EndProject
 
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth4.AuthDev", "Auth4.AuthDev\Auth4.AuthDev.csproj", "{3A45760D-F0FB-40BE-B385-95D5E982374D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth4.AuthAzure", "Auth4.AuthAzure\Auth4.AuthAzure.csproj", "{C1278E37-1EA6-49CE-916B-0D2CD3E4EFA5}"
+EndProject
 
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,5 +33,9 @@ Global
 		{3A45760D-F0FB-40BE-B385-95D5E982374D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A45760D-F0FB-40BE-B385-95D5E982374D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A45760D-F0FB-40BE-B385-95D5E982374D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1278E37-1EA6-49CE-916B-0D2CD3E4EFA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1278E37-1EA6-49CE-916B-0D2CD3E4EFA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1278E37-1EA6-49CE-916B-0D2CD3E4EFA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1278E37-1EA6-49CE-916B-0D2CD3E4EFA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

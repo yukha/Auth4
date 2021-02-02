@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -23,12 +20,12 @@ namespace Auth4.WebApi.Controllers
         [HttpGet]
         public UserData Get()
         {
-            return new UserData
+            return new()
             {
                 TenantId = User.Claims.FirstOrDefault(c => c.Type == "tid")?.Value,
                 UserId = User.Claims.FirstOrDefault(c => c.Type == "sub")?.Value,
                 Name = User.Claims.FirstOrDefault(c => c.Type == "username")?.Value,
-                Roles = User.Claims.FirstOrDefault(c => c.Type == "roles")?.Value.Split(' '),
+                Roles = User.Claims.FirstOrDefault(c => c.Type == "roles")?.Value.Split(' ')
             };
         }
     }

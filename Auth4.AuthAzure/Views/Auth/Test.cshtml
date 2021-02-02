@@ -1,0 +1,28 @@
+﻿@using System.Security.Claims
+@Model UserViewModel
+@{
+    ViewData["Title"] = "User claims";
+}
+<h1>@ViewData["Title"]</h1>
+
+<h3>Parsed data</h3>
+<table style="border-collapse: collapse; width: 100%">
+    @foreach (Claim claim in Model.ParsedClaims)
+    {
+        <tr >
+            <td style="border: solid 1px black;">@claim.Type </td>
+            <td style="border: solid 1px black;">@claim.Value </td>
+        </tr>
+    }
+</table>
+
+<h3>Raw data from azure</h3>
+<table style="border-collapse: collapse; width: 100%">
+    @foreach (Claim claim in Model.User.Claims)
+    {
+        <tr >
+            <td style="border: solid 1px black;">@claim.Type </td>
+            <td style="border: solid 1px black;">@claim.Value </td>
+        </tr>
+    }
+</table>
